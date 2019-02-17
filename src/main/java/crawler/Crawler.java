@@ -1,5 +1,6 @@
 package crawler;
 
+import helpers.FileHelper;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -42,7 +43,7 @@ public class Crawler {
         } else {
             helper.writeToIndexTXT(linksList);
             for (int i = 0; i < 100; i++) {
-                helper.writeToFile(helper.createFile(i), getBodyFromURL(linksList.get(i)));
+                helper.writeToFile(helper.createFileBodiesPath(i), getBodyFromURL(linksList.get(i)));
             }
         }
 

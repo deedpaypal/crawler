@@ -1,4 +1,4 @@
-package crawler;
+package helpers;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -7,8 +7,18 @@ import java.util.List;
 
 public class FileHelper {
 
-    public File createFile(int i) {
+    public File createFileBodiesPath(int i) {
         File file = new File("src/main/resources/bodies/text" + (i + 1) + ".txt");
+        try {
+            file.createNewFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return file;
+    }
+
+    public File createFileLemmasPath(String name) {
+        File file = new File("src/main/resources/lemmBodies/" + name);
         try {
             file.createNewFile();
         } catch (IOException e) {
@@ -41,6 +51,12 @@ public class FileHelper {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
 
+    public File[] getAllFilesFromBodies() {
+        File folder = new File("src/main/resources/bodies");
+        File[] listOfFiles = folder.listFiles();
+
+        return listOfFiles;
     }
 }
