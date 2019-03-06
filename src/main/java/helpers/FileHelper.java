@@ -1,8 +1,7 @@
 package helpers;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class FileHelper {
@@ -59,4 +58,17 @@ public class FileHelper {
 
         return listOfFiles;
     }
+
+    public String readFromFile(File file) throws IOException {
+        BufferedReader abc = new BufferedReader(new FileReader(file));
+        List<String> data = new ArrayList<String>();
+        String s;
+        while ((s = abc.readLine()) != null) {
+            data.add(s);
+        }
+        abc.close();
+        String joined = String.join("", data);
+        return joined;
+    }
 }
+
