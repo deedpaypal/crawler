@@ -29,7 +29,7 @@ public class TFIDFVectorizer {
                 }
             }
         }
-        return Math.log(docs.size() / n);
+        return 1 + Math.log(docs.size() / n);
     }
     
     public double tfIdf(List<String> doc, List<List<String>> docs, String term) {
@@ -59,7 +59,7 @@ public class TFIDFVectorizer {
 
 
         TFIDFVectorizer vectorizer = new TFIDFVectorizer();
-        double tfidf = vectorizer.tfIdf(firstDoc, documents, "baby");
+        double tfidf = vectorizer.tfIdf(firstDoc, documents, "Product");
         System.out.println("TF-IDF (baby) = " + tfidf);
 
 

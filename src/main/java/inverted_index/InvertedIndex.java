@@ -1,5 +1,7 @@
 package inverted_index;
 
+import helpers.FileHelper;
+
 import java.util.*;
 import java.io.*;
 
@@ -9,6 +11,7 @@ import java.io.*;
 public class InvertedIndex {
     Map<Integer,String> sources;
     HashMap<String, HashSet<Integer>> index;
+    FileHelper helper = new FileHelper();
 
     InvertedIndex(){
         sources = new HashMap<Integer,String>();
@@ -51,21 +54,12 @@ public class InvertedIndex {
             return;
         }
         System.out.println("Found in: ");
-        List links = getLinks();
+        List links = helper.getLinks();
 
         for(int num : res){
             System.out.println("\t FileName "+sources.get(num) + " Link: " + links.get(num) );
         }
     }
 
-    public static LinkedList<String> getLinks() throws IOException {
-        LinkedList links = new LinkedList();
-        BufferedReader reader = new BufferedReader(new FileReader("src/main/resources/index.txt"));
-        String line = reader.readLine();
-        while (line != null){
-            links.add(line);
-            line = reader.readLine();
-        }
-        return links;
-    }
+
 }
