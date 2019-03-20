@@ -1,6 +1,7 @@
 package similarity;
 
 import helpers.FileHelper;
+import lemmatizer.StanfordLemmatizer;
 import vectorizer.TFIDFVectorizer;
 
 import java.io.File;
@@ -18,14 +19,13 @@ public class Main {
     private double[] requestVector;
 
 
-
     public void parseFiles(String filePath) throws FileNotFoundException, IOException { // "src/main/resources/lemmBodies/"
-        File[] listOfFiles =  new File(filePath).listFiles();
+        File[] listOfFiles = new File(filePath).listFiles();
 
         for (File file : listOfFiles) {
             if (file.isFile()) {
                 String text = helper.readFromFile(file);
-                List<String> words =  new ArrayList<>(Arrays.asList((text.split(" "))));
+                List<String> words = new ArrayList<>(Arrays.asList((text.split(" "))));
                 for (String term : words) {
                     if (!allTerms.contains(term)) {
                         allTerms.add(term);
@@ -47,12 +47,14 @@ public class Main {
 
     public void getRequestVector() {
         // TODO добавить лемматизацию запроса
-        String request = "apple gorilla";
-        List<String> requestDocument =  new ArrayList<>(Arrays.asList((request.split(" "))));
+        StanfordLemmatizer slem = new StanfordLemmatizer();
+        String request = "apple and gorillas";
+        request = slem.lemmatize(request);
+        List<String> requestDocument = new ArrayList<>(Arrays.asList((request.split(" "))));
         requestVector = tfIdfCalculator(requestDocument);
     }
 
-    public double[] tfIdfCalculator(List<String> document){
+    public double[] tfIdfCalculator(List<String> document) {
         double tfidf;
         double[] tfidfvectors = new double[allTerms.size()];
         int count = 0;
@@ -63,7 +65,6 @@ public class Main {
         }
         return tfidfvectors;
     }
-
 
 
     public List getCosineSimilarity() {
@@ -80,16 +81,15 @@ public class Main {
     }
 
 
-    public static void main(String args[]) throws FileNotFoundException, IOException
-    {
+    public static void main(String args[]) throws FileNotFoundException, IOException {
         Main main = new Main();
-        main.parseFiles( "src/main/resources/lemm/");
+        main.parseFiles("src/main/resources/lemmBodies/");
         main.getDocsVector();
         main.getRequestVector();
         List results = main.getCosineSimilarity();
-        double maxValue = (double)Collections.max(results);
+        double maxValue = (double) Collections.max(results);
         int index = results.indexOf(maxValue);
-        File[] listOfFiles =  new File("src/main/resources/lemm/").listFiles();
+        File[] listOfFiles = new File("src/main/resources/lemmBodies/").listFiles();
         System.out.println(listOfFiles[index].getName());
         System.out.println(main.helper.getLinks().get(index));
     }
