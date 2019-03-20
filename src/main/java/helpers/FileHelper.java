@@ -2,6 +2,7 @@ package helpers;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class FileHelper {
@@ -69,6 +70,17 @@ public class FileHelper {
         abc.close();
         String joined = String.join("", data);
         return joined;
+    }
+
+    public LinkedList<String> getLinks() throws IOException {
+        LinkedList links = new LinkedList();
+        BufferedReader reader = new BufferedReader(new FileReader("src/main/resources/index.txt"));
+        String line = reader.readLine();
+        while (line != null){
+            links.add(line);
+            line = reader.readLine();
+        }
+        return links;
     }
 }
 
