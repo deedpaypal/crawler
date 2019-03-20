@@ -29,9 +29,9 @@ public class TFIDFVectorizer {
                 }
             }
         }
-        return Math.log(docs.size() / n);
+        return 1 + Math.log(docs.size() / n);
     }
-    
+
     public double tfIdf(List<String> doc, List<List<String>> docs, String term) {
         return tf(doc, term) * idf(docs, term);
 
@@ -52,14 +52,14 @@ public class TFIDFVectorizer {
                 }
 
                 List<String> lines = new ArrayList<>(Arrays.asList(words));
-               // documents.add(new ArrayList<>(lines));
+                // documents.add(new ArrayList<>(lines));
                 documents.add(lines);
             }
         }
 
 
         TFIDFVectorizer vectorizer = new TFIDFVectorizer();
-        double tfidf = vectorizer.tfIdf(firstDoc, documents, "baby");
+        double tfidf = vectorizer.tfIdf(firstDoc, documents, "Product");
         System.out.println("TF-IDF (baby) = " + tfidf);
 
 
