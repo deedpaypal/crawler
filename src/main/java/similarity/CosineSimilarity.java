@@ -1,9 +1,12 @@
 package similarity;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class CosineSimilarity {
 
-    public double cosineSimilarity(double[] docVector1, double[] docVector2) {
+    public double calculateCosineSimilarity(double[] docVector1, double[] docVector2) {
         double dotProduct = 0.0;
         double magnitude1 = 0.0;
         double magnitude2 = 0.0;
@@ -26,4 +29,18 @@ public class CosineSimilarity {
         }
         return cosineSimilarity;
     }
+
+    public List<Double> getCosineSimilarity(List<double[]> tfidfDocsVector, double[] requestVector) {
+        List<Double> results = new ArrayList();
+        for (int i = 0; i < tfidfDocsVector.size(); i++) {
+            results.add(calculateCosineSimilarity
+                    (
+                            requestVector,
+                            tfidfDocsVector.get(i)
+                    )
+            );
+        }
+        return results;
+    }
+
 }
